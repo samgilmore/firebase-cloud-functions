@@ -13,7 +13,7 @@ Testing and deploying Plaid functions using Firebase Cloud
 • Uses access token to output transaction data
 
 
-##To test
+## To test
 
 Follow the steps in Firebase docs:
 https://firebase.google.com/docs/functions/get-started
