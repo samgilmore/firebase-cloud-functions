@@ -1,7 +1,7 @@
 # Plaid Firebase Cloud Functions
 Testing and deploying Plaid functions using Firebase Cloud
 
-## Three Endpoints to achieve Transactions List
+## Three Endpoints to retrieve Transactions List
 
 ### "createLinkToken"
 • Creates a new link token with unique user ID
