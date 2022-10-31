@@ -1,5 +1,5 @@
-# Plaid Firebase Cloud Functions
-Testing and deploying Plaid functions using Firebase Cloud
+# Plaid Auth and Sync Firebase Cloud Functions
+Testing and deploying Plaid functions using Firebase Cloud and new Plaid Sync
 
 ## Three Endpoints to retrieve Transactions List
 
