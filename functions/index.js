@@ -83,8 +83,16 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 exports.getTransactionsCent = functions.https.onRequest(async (request, response) => {
   const ACCESS_TOKEN = request.body.access_token;
   console.log("Access Token: " + ACCESS_TOKEN);
+
+  //Get account and itemID data
+  const accountResponse = await client.accountsGet({
+    access_token: ACCESS_TOKEN,
+  });
+
   // Set cursor to empty to receive all historical updates
-  let cursor = null;
+  let cursor = request.body.cursor == "" ? null : request.body.cursor;
+  console.log("cursor: " + cursor);
+
   // New transaction updates since "cursor"
   let added = [];
   let modified = [];
@@ -113,7 +121,12 @@ exports.getTransactionsCent = functions.https.onRequest(async (request, response
   const compareTxnsByDateAscending = (a, b) => (a.date > b.date) - (a.date < b.date);
   // Return the 8 most recent transactions
   const recently_added = [...added].sort(compareTxnsByDateAscending).slice(-8);
-  response.json({transactions: recently_added});
+  response.json({
+    cursor: cursor,
+    accounts: accountResponse.data.accounts,
+    item: accountResponse.data.item,
+    transactions: recently_added
+  });
 })
 
 exports.createLinkTokenCent = functions.https.onRequest(async (request, response, next) => {
