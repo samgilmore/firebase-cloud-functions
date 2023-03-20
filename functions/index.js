@@ -55,14 +55,14 @@ let PAYMENT_ID = null;
 let TRANSFER_ID = null;
 
 const configuration = new Configuration({
-    basePath: PlaidEnvironments[PLAID_ENV],
-    baseOptions: {
-        headers: {
-            'PLAID-CLIENT-ID': PLAID_CLIENT_ID,
-            'PLAID-SECRET': PLAID_SECRET,
-            'Plaid-Version': '2020-09-14',
-        }
-    }
+  basePath: PlaidEnvironments[PLAID_ENV],
+  baseOptions: {
+      headers: {
+          'PLAID-CLIENT-ID': PLAID_CLIENT_ID,
+          'PLAID-SECRET': PLAID_SECRET,
+          'Plaid-Version': '2020-09-14',
+      }
+  }
 });
 
 const client = new PlaidApi(configuration);
@@ -132,22 +132,21 @@ exports.getTransactionsCent = functions.https.onRequest(async (request, response
 exports.createLinkTokenCent = functions.https.onRequest(async (request, response, next) => {
   response.set('Access-Control-Allow-Origin', 'http://localhost:3000');
 
-      const configs = {
-        user: {
-          // This should correspond to a unique id for the current user.
-          client_user_id: request.body.user.client_user_id,
-        },
-        client_name: request.body.client_name,
-        products: PLAID_PRODUCTS,
-        country_codes: PLAID_COUNTRY_CODES,
-        language: 'en',
-        account_filters: request.body.account_filters
-      };
+  const configs = {
+    user: {
+      // This should correspond to a unique id for the current user.
+      client_user_id: request.body.user.client_user_id,
+    },
+    client_name: request.body.client_name,
+    products: PLAID_PRODUCTS,
+    country_codes: PLAID_COUNTRY_CODES,
+    language: 'en',
+    account_filters: request.body.account_filters
+  };
 
-      const createTokenResponse = await client.linkTokenCreate(configs);
-      prettyPrintResponse(createTokenResponse);
-      response.json(createTokenResponse.data);
-
+  const createTokenResponse = await client.linkTokenCreate(configs);
+  prettyPrintResponse(createTokenResponse);
+  response.json(createTokenResponse.data);
 });
 
 exports.exchangeTokenCent = functions.https.onRequest(async (request, response, next) => {
